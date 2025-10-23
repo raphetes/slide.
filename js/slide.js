@@ -8,7 +8,7 @@ export default class Slide {
 			finalDistance: 0,
 			pageX: 0,
 			movement: 0,
-		} // objetos pra guardar valores úteis
+		}
 	}
 
 	moveSlide(distX) {
