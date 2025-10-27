@@ -31,28 +31,61 @@ export default class Slide {
     this.slide.addEventListener("touchend", this.onEnd);
   }
   onMove(event) {
-    const pointerPosition = (event.type === "mousemove" ? event.pageX : event.changedTouches[0].pageX);
+    const pointerPosition =
+      event.type === "mousemove" ? event.pageX : event.changedTouches[0].pageX;
     const finalPosition = this.updatePosition(pointerPosition);
     this.moveSlide(finalPosition);
   }
   onEnd(event) {
-    const movetype = (event.type === 'mouseup' ? 'mousemove' : 'touchmove')
+    const movetype = event.type === "mouseup" ? "mousemove" : "touchmove";
     this.slide.removeEventListener(movetype, this.onMove);
     this.dist.finalDistance = this.dist.movePosition;
   }
   addSlideEvents() {
     this.slide.addEventListener("mousedown", this.onStart);
     this.slide.addEventListener("touchstart", this.onStart);
-    document.addEventListener('mouseup', this.onEnd)
+    document.addEventListener("mouseup", this.onEnd);
   }
   bind() {
     this.onStart = this.onStart.bind(this);
     this.onMove = this.onMove.bind(this);
     this.onEnd = this.onEnd.bind(this);
   }
+
+  // Slides Config.
+
+  slidesIndexNav(i) {
+    const last = this.slideArray.length - 1
+    this.index = {
+      prev: i ? i - 1 : undefined,
+      current: i,
+      next: i === last ? undefined : i + 1,
+    }
+  }
+
+  slidePosition(element) {
+    const margin = (this.wrapper.offsetWidth - element.offsetWidth) / 2;
+    return (element.offsetLeft - margin)
+  }
+
+  slidesConfig() {
+    this.slideArray = [...this.slide.children].map((element) => {
+      const positionElement = this.slidePosition(element);
+      return { positionElement, element };
+    });
+  }
+
+  changeSlide(index) {
+    const activeSlide = this.slideArray[index]
+    this.moveSlide(activeSlide.positionElement)
+    this.slidesIndexNav(index)
+    this.dist.finalDistance = activeSlide.positionElement
+  }
+
   init() {
     this.bind();
     this.addSlideEvents();
+    this.slidesConfig();
   }
 }
 
