@@ -17,21 +17,33 @@ export default class Slide {
     return this.dist.finalDistance + this.dist.movement;
   }
   onStart(event) {
-    event.preventDefault();
-    this.slide.addEventListener("mousemove", this.onMove);
+    let movetype;
+    if (event.type === "mousedown") {
+      event.preventDefault();
+      movetype = "mousemove";
+      this.dist.pageX = event.pageX;
+    } else {
+      movetype = "touchmove";
+      this.dist.pageX = event.changedTouches[0].pageX;
+    }
+    this.slide.addEventListener(movetype, this.onMove);
     this.slide.addEventListener("mouseup", this.onEnd);
-    this.dist.pageX = event.pageX;
+    this.slide.addEventListener("touchend", this.onEnd);
   }
   onMove(event) {
-    const finalPosition = this.updatePosition(event.pageX);
+    const pointerPosition = (event.type === "mousemove" ? event.pageX : event.changedTouches[0].pageX);
+    const finalPosition = this.updatePosition(pointerPosition);
     this.moveSlide(finalPosition);
   }
-  onEnd() {
-    this.slide.removeEventListener("mousemove", this.onMove);
+  onEnd(event) {
+    const movetype = (event.type === 'mouseup' ? 'mousemove' : 'touchmove')
+    this.slide.removeEventListener(movetype, this.onMove);
     this.dist.finalDistance = this.dist.movePosition;
   }
   addSlideEvents() {
     this.slide.addEventListener("mousedown", this.onStart);
+    this.slide.addEventListener("touchstart", this.onStart);
+    document.addEventListener('mouseup', this.onEnd)
   }
   bind() {
     this.onStart = this.onStart.bind(this);
@@ -43,3 +55,5 @@ export default class Slide {
     this.addSlideEvents();
   }
 }
+
+// criar nova branch
