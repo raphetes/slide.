@@ -5,10 +5,10 @@
 }
 img {
   display: block;
-	max-width: 100%;
+  max-width: 100%;
 }
 .wrapper {
-	overflow: hidden;
+  overflow: hidden;
 }
 .slide {
   display: flex;
@@ -20,12 +20,12 @@ img {
   max-width: 80rem;
   flex-shrink: 0;
   width: 80vw;
-	margin: 0 2rem;
+  margin: 0 2rem;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .4);
-  opacity: .8;
-  transform: scale(.8);
-  transition: .4s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  opacity: 0.8;
+  transform: scale(0.8);
+  transition: 0.4s;
 }
 
 .slide li.active {
@@ -39,12 +39,12 @@ img {
 }
 button {
   font-size: 2rem;
-  border-radius: .3rem;
+  border-radius: 0.3rem;
   padding: 1rem;
   border: 1px solid black;
 }
 button:hover {
-  opacity: .8;
+  opacity: 0.8;
 }
 ul {
   list-style: none;
@@ -63,9 +63,54 @@ ul {
   height: 2rem;
   overflow: hidden;
   text-indent: -999px;
-  margin: .5rem;
+  margin: 0.5rem;
 }
-[data-control="slide"] li.active a, [data-control="slide"] li a:hover  {
+[data-control="slide"] li.active a,
+[data-control="slide"] li a:hover {
   background: #e54;
+  transition: 0.2s;
+}
+
+.custom-control {
+  display: flex;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  /*flex-wrap: wrap; */
+}
+
+.custom-control li {
   transition: .2s;
+  opacity: .8;
+  transform: scale(.8);
+  width: 4rem;
+  height: 4rem;
+  border-radius: 25%;
+  overflow: hidden;
+  margin: 2px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, .5);
+}
+.custom-control li:hover {
+  cursor: pointer;
+}
+.custom-control li.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.arrow-nav {
+  display: flex;
+  justify-content: space-around;
+  margin: 2rem 0;
+}
+.arrow-nav button {
+  cursor: pointer;
+  border: none;
+  border-radius: .4rem;
+  width: 4rem;
+  height: 4rem;
+  background: #fb5 url('../img/arrow.svg') center center no-repeat;
+}
+.arrow-nav button.prev {
+  transform: rotate(180deg);
 }
