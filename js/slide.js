@@ -146,7 +146,7 @@ export class Slide {
   }
 }
 
-export class slideNav extends Slide {
+export default class slideNav extends Slide {
   constructor(...args) {
     super(...args); // pra puxar o constructor da classe anterior
     this.bindControl();
